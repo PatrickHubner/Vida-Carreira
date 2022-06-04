@@ -25,7 +25,7 @@ public class MenuController {
 				break;
 				
 			default:
-				System.out.println("Opcao invalida!!!");
+				JOptionPane.showMessageDialog(null, "Opcao invalida!!!", null, JOptionPane.ERROR_MESSAGE);
 				break;
 				
 			}
