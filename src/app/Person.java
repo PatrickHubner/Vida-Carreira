@@ -1,9 +1,14 @@
+//DIREITOS RESERVADOS PARA PATRICK HUBNER.
+
 package app;
 
 
 import javax.swing.JOptionPane;
 import java.awt.Desktop;
-import java.net.URI;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 
 public class Person {
@@ -17,9 +22,10 @@ public class Person {
 	private String experiencia;
 	private String idiomas;
 	private String informacoesComp;
-	public String urlHackaton;
 
 
+	
+	
 	//GETTERS E SETTERS
 	public String getNome() {
 		return nome;
@@ -82,13 +88,6 @@ public class Person {
 		this.informacoesComp = informacoesComp;
 	}
 
-	public String getUrlHackaton() {
-		return urlHackaton;
-	}
-	public void setUrlHackaton(String urlHackaton) {
-		this.urlHackaton = urlHackaton;
-	}
-	
 	
 	
 	//Metodo para aparecer menu de opções na escolaridade;
@@ -112,34 +111,54 @@ public class Person {
 		setIdiomas(JOptionPane.showInputDialog("Por gentileza me informe seus idiomas, caso haja mais de um favor digitar com virgula: "));
 		setInformacoesComp(JOptionPane.showInputDialog("Digite suas informações complementares: "));
 	}
+
+	public void showDados() { //METODO A QUAL ME MOSTRA OS DADOS DIGITADOS PELO USUARIO EM FORMA DE LISTA NO SISTEMA
+		JOptionPane.showMessageDialog(null, "nome = " + nome + "\n" + "dataDeNascimento = " + dataDeNascimento + "\n" + "Endereço = " + endereço
+				+ "\n" + "Celular = " + celular + "\n" + "Objetivo = " +objetivo + "\n" + "FormacaoAcademica = " + formacaoAcademica
+				+ "\n" + "Cursos = " + cursos + "\n" + "Experiencias = " + experiencia + "\n" + "Idiomas = " + idiomas + "\n" + "InformacoesComp = "
+				+ informacoesComp);
+	}
 	
-	public void showLinks() {
-		int choseeLinks;
-		choseeLinks = Integer.parseInt(JOptionPane.showInputDialog(null, "Links de Hackaton:\n" + "1 - https://chain.link/hackathon\n" + "2 - https://hackcovid-19.devpost.com/"));
-		switch(choseeLinks) {
-		case 1:
-			try {
-				URI link = new URI("https://chain.link/hackathon");
-				Desktop.getDesktop().browse(link);
-			}catch(Exception erro) {
-				JOptionPane.showMessageDialog(null, "ERRO AO ABRI NAVEGADOR");
-			}
-			
-		case 2:
-			try {
-				URI link2 = new URI("https://hackcovid-19.devpost.com/");
-				Desktop.getDesktop().browse(link2);
-			}catch(Exception erro) {
-				JOptionPane.showMessageDialog(null, "ERRO AO ABRI NAVEGADOR");
-			}
+	public void CreateArq() throws IOException { // METODO PARA CRIAR UM ARQUIVO
+		FileWriter arq = new FileWriter("C:\\Users\\workp\\Downloads\\Curriculum.txt");//DEFININDO DIRETORIO DO ARQUIVO
+		PrintWriter gravarArq = new PrintWriter(arq);// INSTANCIANDO CLASSE DE CRIAÇÃO DE TEXTO
+		gravarArq.printf("-----------------Curriculo 2022-------------------\n");
+		gravarArq.println("nome = " + nome + "\n" + "dataDeNascimento = " + dataDeNascimento + "\n" + "Endereço = " + endereço
+				+ "\n" + "Celular = " + celular + "\n" + "Objetivo = " + objetivo + "\n" + "FormacaoAcademica = " + formacaoAcademica
+				+ "\n" + "Cursos = " + cursos + "\n" + "Experiencias = " +  experiencia + "\n" + "Idiomas = " + idiomas + "\n" + "InformacoesComp = "
+				+ informacoesComp);
+		gravarArq.printf("----------------------------------------------------");
+		arq.close();//FECHANDO E SALVANDO ARQUIVO
 		
-		default:
-			JOptionPane.showMessageDialog(null, "Em breve novas melhorias!");
+		try {
+			java.awt.Desktop.getDesktop().open( new File("C:\\\\Users\\\\workp\\\\Downloads\\\\Curriculum.txt")); // METODO QUE ABRE O ARQUIVO APÓS SALVA-LO
+		}
+		catch(IllegalArgumentException e1) {
+			System.out.println(e1);// PRINTAR ERRO CASO NÃO CONSIGA ABRIR
 		}
 		
 	}
 	
+	
+	public void showCadastro() throws IOException{
+		int confirm = JOptionPane.showConfirmDialog(null, "Deseja conferir as informaçoes digitadas?", null, JOptionPane.YES_NO_OPTION);
+		if(confirm == 0) {
+			showDados();//CHAMANDO METODO DE MOSTRAR DADOS EM LISTA
+			CreateArq();//CRIANDO ARQUIVO
+		} else {
+			CreateArq();//APENAS CRIANDO ARQUIVO
+		}
 	}
+	
+	
+	
+	
+	
+}
+
+	
+	
+	
 	
 	
 	

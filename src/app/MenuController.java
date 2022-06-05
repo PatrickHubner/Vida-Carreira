@@ -1,31 +1,44 @@
+//DIREITOS RESERVADOS PARA PATRICK HUBNER
+
 package app;
+
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
 public class MenuController {
-		private int op;
+		private int op; //VARIAVEL DO TIPO INTEIRO
 
-		public void rodaMenu() {
+		public void rodaMenu(){
 			do {
 				op = Integer.parseInt(JOptionPane.showInputDialog("Você possui um curriculo?\n" + "1 - SIM\n" + "2 - NAO\n" + "0 - SAIR\n"));
 			switch(op) {
 			
 			case 1: 
-				Person p1 = new Person();
-				p1.showLinks();
+				Links l1 = new Links(); //INSTANCIANDO A CLASSE QUE CONTEM LINKS DE HACKATON
+				l1.showLinks(); // CHAMANDO O METODO QUE MOSTRA E ABRE LINKS NO NAVEGADOR
 				break;
 			
 			case 2: 
-				Person p2 = new Person();//instanciando a classe Person para criar um curriculo
-				p2.Cadastro();//chamando o metodo cadastro da classe person
+				Person p2 = new Person(); // INSTANCIANDO A CLASSE PERSON PARA CADASTRO DE CURRICULO
+				int confirm; // CRIANDO UMA VARIAVEL DE CONFIRMAÇÃO DE CADASTRO
+				confirm = JOptionPane.showConfirmDialog(null, "Você deseja criar um curriculo? ", null, JOptionPane.YES_NO_OPTION);
+				if(confirm == 0) { // 0 = SIM, 1 = NÃO
+					p2.Cadastro();
+				try {
+					p2.showCadastro();//CHAMANDO O METODO QUE MOSTRA O CADASTRO E CRIA UM ARQUIVO NO SISTEMA PARA GUARDAR AS INFORMAÇÕES
+				} catch (IOException e) {
+					e.printStackTrace(); // CASO NÃO CONSIGA APRESENTAR UM ERRO
+				}
+				}
 				break;
 			
 			case 0:
-				cancel();
+				cancel();//CHAMANDO METODO DE CANCELAMENTO CASO O USUARIO NÃO QUEIRA SAIR DO SISTEMA
 				break;
 				
 			default:
-				JOptionPane.showMessageDialog(null, "Opcao invalida!!!", null, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Opcao invalida!!!", null, JOptionPane.ERROR_MESSAGE);//APRESENTA DIALOGO DE ERRO CASO COLOQUE UMA OPÇÃO INVALIDA
 				break;
 				
 			}
@@ -38,7 +51,7 @@ public class MenuController {
 			if(confirm == 0) {
 		    JOptionPane.showMessageDialog(null, "Programa encerrado!");
 			}else {
-				rodaMenu();
+				rodaMenu();//CASO NÃO QUEIRA SAIR DO SISTEMA, RECOMEÇA-LO.
 			}
 		}
 		
